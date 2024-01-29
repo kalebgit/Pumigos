@@ -3,10 +3,12 @@ import {useSelector, useDispatch} from 'react-redux'
 import FormContainer from './FormContainer'
 import Input from './Input'
 import { authActions } from '../../store/store'
+import { useRef } from 'react'
 
 export default function Register({login, signup}){
     //using dispatch function
     const dispatch = useDispatch()
+    const emailRef = useRef()
 
     const authenticated = useSelector(state=>state.auth.authenticated)
     
@@ -14,10 +16,10 @@ export default function Register({login, signup}){
     function onRegister(event){
         event.preventDefault()
         
+        console.log(emailRef.current)
         
-        
-        login && dispatch(authActions.login())
-        signup && dispatch(authActions.signup())
+        login && dispatch(authActions.login(emailRef.current.value))
+        signup && dispatch(authActions.signup(emailRef.current.value))
     }
 
     return (
@@ -27,7 +29,8 @@ export default function Register({login, signup}){
             onSubmit={onRegister} 
             title={login ? "login" : signup ? "signout" : ""}>
             <Input
-                type="email" name="email" labelText="Correo"/>
+                type="email" name="email" labelText="Correo" ref={emailRef}
+                />
             <Input
                 type="password" name="password" labelText="Contraseña"/>
             {

@@ -1,10 +1,13 @@
+import { forwardRef } from "react"
 
 
-export default function Input({labelText, name, ...props}){
-    return (
-        <div>
-            <label htmlFor={name}>{labelText}</label>
-            <input name={name} id={name} {...props}/>
-        </div>
-    )
-}
+const Input = forwardRef(function Input({labelText, name, ...props}, ref){
+        return (
+            <div>
+                <label htmlFor={name}>{labelText}</label>
+                <input name={name} id={name} {...props} ref={ref}/>
+            </div>
+        )
+    })
+
+    export default Input
