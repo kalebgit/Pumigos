@@ -4,22 +4,24 @@ import FormContainer from './FormContainer'
 import Input from './Input'
 import { authActions } from '../../store/store'
 import { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Register({login, signup}){
     //using dispatch function
     const dispatch = useDispatch()
-    const emailRef = useRef()
-
     const authenticated = useSelector(state=>state.auth.authenticated)
-    
+
+    const emailRef = useRef();
+    const navigate = useNavigate()
     
     function onRegister(event){
         event.preventDefault()
         
         console.log(emailRef.current)
         
-        login && dispatch(authActions.login(emailRef.current.value))
-        signup && dispatch(authActions.signup(emailRef.current.value))
+        login && dispatch(authActions.login({email: emailRef.current.value}))
+        signup && dispatch(authActions.signup({email: emailRef.current.value}))
+        navigate('/chat')
     }
 
     return (
